@@ -1,0 +1,16 @@
+{
+    "name": "@ooaklee/actions-go-example",
+    "version": "1.0.0",
+    "private": true,
+    "main": "invoke-binary.js",
+    "scripts": {
+      "package": "echo 'building binaries...' && cd src && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -ldflags=\"-w -s\" -o ../dist/action-amd64 main.go && CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -a -installsuffix cgo -ldflags=\"-w -s\" -o ../dist/action-arm64 main.go",
+      "readme": "action-docs -un -t 1",
+      "fmt": "cd src && go fmt  ./...",
+      "test": "cd src && go test -v  ./..."
+    },
+    "devDependencies": {
+      "action-docs": "^2.4.0"
+    }
+  }
+  
