@@ -1,0 +1,17 @@
+name: 'What The Ref'
+description: 'A GitHub Action that allows users to find the ref (sha/branch & path relative to workflow) of a named action that is utilised in a workflow'
+author: 'Leon Silcott <leon@boasi.io>'
+inputs:
+  action-name:
+    description: 'The name of the action to find the ref for'
+    required: true
+  action-home-path-override:
+    description: 'The override path to the action home directory'
+    required: false
+  action-full-actions-store-path-override:
+    description: 'The override path to the full path to which actioned are stored when referenced by in a workflow. By default it is set to `/home/runner/_work/_actions` (for the majority of non GitHub-hosted runners) or `/home/runner/work/_actions` (for GitHub-hosted runners i.e. ubuntu-latest). If this value is set, it will be used over action-home-path-override'
+    required: false
+
+runs:
+  using: 'node20'
+  main: 'invoke-binary.js'

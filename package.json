@@ -6,7 +6,8 @@
     "author": "Leon Silcott <leon@boasi.io>",
     "workspaces": {
     "packages": [
-        "go-example"
+        "go-example",
+        "what-the-ref"
     ],
     "nohoist": [
         "node_modules"
