@@ -7,19 +7,6 @@ import (
 	githubactions "github.com/sethvargo/go-githubactions"
 )
 
-const (
-	// DefaultActionsStorePathGitHubHostedRunner is the default path
-	// for the action store for GitHub hosted runners
-	DefaultActionsStorePathGitHubHostedRunner string = "/home/runner/work/_actions"
-
-	// DefaultActionsStorePathNonGitHubHostedRunner is the default path
-	// for the action store for non GitHub hosted runners i.e. runs-on
-	DefaultActionsStorePathNonGitHubHostedRunner string = "/home/runner/work/_actions"
-
-	// DefaultActionHomePath is the default path for the action's home path
-	DefaultActionHomePath string = "/home/runner"
-)
-
 var (
 	// ErrNoActionNameProvided is the error returned when no action name is given
 	ErrNoActionNameProvided = errors.New("NoActionNameProvided")

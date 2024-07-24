@@ -12,6 +12,12 @@ inputs:
     description: 'The override path to the full path to which actioned are stored when referenced by in a workflow. By default it is set to `/home/runner/_work/_actions` (for the majority of non GitHub-hosted runners) or `/home/runner/work/_actions` (for GitHub-hosted runners i.e. ubuntu-latest). If this value is set, it will be used over action-home-path-override'
     required: false
 
+outputs:
+  ref:
+    description: 'The identified reference (branch, commit or tag) of the specified action'
+  path:
+    description: 'The identified path of the specified action'
+
 runs:
   using: 'node20'
   main: 'invoke-binary.js'
