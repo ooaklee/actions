@@ -25,5 +25,10 @@ This action is a `node20` action.
 <!-- action-docs-inputs source="action.yml" -->
 
 <!-- action-docs-outputs source="action.yml" -->
+## Outputs
 
+| name | description |
+| --- | --- |
+| `ref` | <p>The identified reference (branch, commit or tag) of the specified action</p> |
+| `path` | <p>The identified path of the specified action</p> |
 <!-- action-docs-outputs source="action.yml" -->
