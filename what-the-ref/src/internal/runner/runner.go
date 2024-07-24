@@ -76,7 +76,7 @@ func InvokeAction(ctx context.Context, cfg *config.Config) error {
 		if cfg.ActionHomePathOverride == "" {
 
 			// attempt to find the action home path from the environment variable HOME
-			actionHomePath := os.Getenv("HOME")
+			actionHomePath = os.Getenv("HOME")
 
 			if actionHomePath == "" {
 				cfg.Action.Errorf("the HOME path cannot be found and it must be set, or a full actions store path override must be provided")
