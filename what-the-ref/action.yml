@@ -17,6 +17,8 @@ outputs:
     description: 'The identified reference (branch, commit or tag) of the specified action'
   path:
     description: 'The identified path of the specified action'
+  path-relative:
+    description: 'The relative path of the specified action from the workspace of the workflow (HOME)'
 
 runs:
   using: 'node20'

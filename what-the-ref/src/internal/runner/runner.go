@@ -51,8 +51,9 @@ func InvokeAction(ctx context.Context, cfg *config.Config) error {
 		actionStorePath    string
 		actionHomePath     string
 
-		finalFullActionsStorePath string
-		finalActionRef            string
+		finalFullActionsStorePath     string
+		finalRelativeActionsStorePath string
+		finalActionRef                string
 	)
 
 	if githubActionWorkingDir == "" {
@@ -170,15 +171,23 @@ func InvokeAction(ctx context.Context, cfg *config.Config) error {
 	finalActionRef = selectedTargetActionStoredVersion
 	finalFullActionsStorePath = actionFullPathInActionStore
 
+	// set relative path if home is set
+	if actionHomePath != "" {
+		finalRelativeActionsStorePath = strings.ReplaceAll(finalFullActionsStorePath, actionHomePath, ".")
+		cfg.Action.Debugf("Action home path detected: %s, generated relative path: %s", actionHomePath, finalRelativeActionsStorePath)
+	}
+
 	// set the outputs
 	cfg.Action.SetOutput("ref", finalActionRef)
 	cfg.Action.SetOutput("path", finalFullActionsStorePath)
+	cfg.Action.SetOutput("path-relative", finalRelativeActionsStorePath)
 
 	// Summary exist of what was found
-	cfg.Action.Infof("\"What the ref\" has determined that the candidate details for the specified action (%s) are as follows:\n  - Ref: %s\n  - Store Path: %s",
+	cfg.Action.Infof("\"What the ref\" has determined that the candidate details for the specified action (%s) are as follows:\n  - Ref: %s\n  - Abosulte Store Path: %s\n  - Relative Store Path: %s",
 		cfg.ActionName,
 		finalActionRef,
 		finalFullActionsStorePath,
+		finalRelativeActionsStorePath,
 	)
 
 	return nil
