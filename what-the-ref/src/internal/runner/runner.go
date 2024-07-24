@@ -17,7 +17,7 @@ const (
 
 	// DefaultActionsStorePathNonGitHubHostedRunnerTmpl is the tempate of the
 	// default path for the action store for non GitHub hosted runners i.e. runs-on
-	DefaultActionsStorePathNonGitHubHostedRunnerTmpl string = "%s/work/_actions"
+	DefaultActionsStorePathNonGitHubHostedRunnerTmpl string = "%s/_work/_actions"
 
 	// DefaultActionHomePath is the default path for the action's home path
 	DefaultActionHomePath string = "/home/runner"
@@ -114,7 +114,7 @@ func InvokeAction(ctx context.Context, cfg *config.Config) error {
 
 	if !isStorePathValid {
 		cfg.Action.Errorf("the full action store path is not valid!")
-		cfg.Action.Warningf("the full action store path can be set by:\n  - ensuring the correct HOME is set for your runner set up\n  - setting the input 'action-full-actions-store-path-override' to the correct path.\nBy default, each runner has the deafult path for the action store:\n - Github hosted runner: %s\n - Github self-hosted runner: %s",
+		cfg.Action.Warningf("the full action store path can be set by:\n  - ensuring the correct HOME is set for your runner set up\n  - setting the input 'action-full-actions-store-path-override' to the correct path.\n\nBy default, each runner has the deafult path for the action store:\n - Github hosted runner: %s\n - Github self-hosted runner: %s",
 			fmt.Sprintf(
 				DefaultActionsStorePathGitHubHostedRunnerTmpl,
 				DefaultActionHomePath,
