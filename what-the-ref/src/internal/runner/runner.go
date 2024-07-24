@@ -85,6 +85,9 @@ func InvokeAction(ctx context.Context, cfg *config.Config) error {
 			}
 		}
 
+		// output the action home path
+		cfg.Action.Infof("Action home path: %s", actionHomePath)
+
 		possibleStorePaths = []string{
 			// using action home path, create the default path for a GitHub hosted runner's action store
 			fmt.Sprintf(
