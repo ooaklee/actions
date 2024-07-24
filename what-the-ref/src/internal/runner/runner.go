@@ -167,23 +167,6 @@ func InvokeAction(ctx context.Context, cfg *config.Config) error {
 	finalActionRef = selectedTargetActionStoredVersion
 	finalFullActionsStorePath = actionFullPathInActionStore
 
-	// ORIGINAL PLAN OF ACTION
-	// otherwise check if the action home path override is set, if not, check for the HOME environment variable
-	// if neither is set, error out and tell use that the action home path is not set and needs to be set
-	// if value can be found for action home path, append into both  store path templates and see which path exists
-
-	// if neither store path exists, error out and tell user that the action full store path is not set and cannot be found
-	// if actionStorePath == "" && !isStorePathValid {
-	// 	cfg.Action.Errorf("No action store path found")
-	// 	return ErrActionStorePathNotFound
-	// }
-
-	// using the path that  exists, look for a file that has the suffix .completed
-	// if the file cannot be found, error out and tell user that no valid action has not been completed (output dir in debug) and exit with error
-
-	// if file it found, task it's name and assign as the ref output
-	// verify the ref can be accessed and then use that full path and assign as the path output (making sure trailing slash is removed)
-
 	// set the outputs
 	cfg.Action.SetOutput("ref", finalActionRef)
 	cfg.Action.SetOutput("path", finalFullActionsStorePath)
