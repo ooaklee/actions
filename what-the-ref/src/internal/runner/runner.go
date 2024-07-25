@@ -183,7 +183,7 @@ func InvokeAction(ctx context.Context, cfg *config.Config) error {
 	cfg.Action.SetOutput("path-relative", finalRelativeActionsStorePath)
 
 	// Summary exist of what was found
-	cfg.Action.Infof("\"What the ref\" has deduced that the candidate refs for the specified action (%s) are as follows:\n  - Ref [outputs.ref]: %s\n  - Abosulte Store Path [outputs.path]: %s\n  - Relative Store Path [outputs.path-relative]: %s\n",
+	cfg.Action.Infof("\"What the ref\" has deduced that the candidate refs for the specified action (%s) are as follows:\n  - [outputs.ref]: %s\n  - [outputs.path]: %s\n  - [outputs.path-relative]: %s\n",
 		cfg.ActionName,
 		finalActionRef,
 		finalFullActionsStorePath,
