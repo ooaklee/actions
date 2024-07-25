@@ -87,7 +87,7 @@ func InvokeAction(ctx context.Context, cfg *config.Config) error {
 		}
 
 		// output the action home path
-		cfg.Action.Infof("Action home path: %s", actionHomePath)
+		cfg.Action.Debugf("Action home path: %s", actionHomePath)
 
 		possibleStorePaths = []string{
 			// using action home path, create the default path for a GitHub hosted runner's action store
@@ -107,7 +107,7 @@ func InvokeAction(ctx context.Context, cfg *config.Config) error {
 	//// Validate action store path (ctx, possibleStorePaths) ( storePath string, error)
 	// validate at least one of the possible store paths exist and is valid
 	for _, possibleStorePath := range possibleStorePaths {
-		cfg.Action.Infof("Checking if action store path exists: %s", possibleStorePath)
+		cfg.Action.Debugf("Checking if action store path exists: %s", possibleStorePath)
 
 		if _, err := os.Stat(possibleStorePath); err == nil {
 			isStorePathValid = true
@@ -183,7 +183,7 @@ func InvokeAction(ctx context.Context, cfg *config.Config) error {
 	cfg.Action.SetOutput("path-relative", finalRelativeActionsStorePath)
 
 	// Summary exist of what was found
-	cfg.Action.Infof("\"What the ref\" has determined that the candidate details for the specified action (%s) are as follows:\n  - Ref: %s\n  - Abosulte Store Path: %s\n  - Relative Store Path: %s",
+	cfg.Action.Infof("\"What the ref\" has deduced that the candidate refs for the specified action (%s) are as follows:\n  - Ref [outputs.ref]: %s\n  - Abosulte Store Path [outputs.path]: %s\n  - Relative Store Path [outputs.path-relative]: %s\n",
 		cfg.ActionName,
 		finalActionRef,
 		finalFullActionsStorePath,
