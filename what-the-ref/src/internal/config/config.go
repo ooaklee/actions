@@ -48,7 +48,8 @@ func NewFromInputs(action *githubactions.Action) (*Config, error) {
 		action.GetInput("action-name"),
 	)
 	if actionNameInput == "" {
-		action.Fatalf("An action name must be provided")
+		action.Errorf("An action name must be provided")
+		return nil, ErrNoActionNameProvided
 	}
 	actionName = actionNameInput
 

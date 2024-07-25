@@ -34,6 +34,17 @@ func TestConfig_NewFromInputs(t *testing.T) {
 			expectedOutput: "",
 			expectedError:  nil,
 		},
+		{
+			name:   "failed - no action name provided",
+			preRun: func() {},
+			envMap: map[string]string{
+				"INPUT_ACTION-NAME":                             "",
+				"INPUT_ACTION-HOME-PATH-OVERRIDE":               "",
+				"INPUT_ACTION-FULL-ACTIONS-STORE-PATH-OVERRIDE": "",
+			},
+			expectedOutput: "::error::An action name must be provided",
+			expectedError:  config.ErrNoActionNameProvided,
+		},
 	}
 
 	for _, test := range tests {
@@ -54,6 +65,7 @@ func TestConfig_NewFromInputs(t *testing.T) {
 
 			cfg, inputsErr := config.NewFromInputs(action)
 			if inputsErr != nil {
+				assert.Equal(t, test.expectedOutput, actionLog.String())
 				assert.Equal(t, test.expectedError, inputsErr)
 			}
 
