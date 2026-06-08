@@ -11,7 +11,7 @@ A template for a Go-based action
 <!-- action-docs-runs source="action.yml" -->
 ## Runs
 
-This action is a `node20` action.
+This action is a `node24` action.
 <!-- action-docs-runs source="action.yml" -->
 
 <!-- action-docs-inputs source="action.yml" -->
@@ -19,8 +19,8 @@ This action is a `node20` action.
 
 | name | description | required | default |
 | --- | --- | --- | --- |
-| `name` | <p>The name to greet sample input</p> | `required` | `""` |
-| `repetition` | <p>The number of times to repeat greeting sample input</p> | `required` | `""` |
+| `name` | <p>The name to greet</p> | `true` | `""` |
+| `repetition` | <p>The number of times to repeat the greeting</p> | `false` | `1` |
 <!-- action-docs-inputs source="action.yml" -->
 
 <!-- action-docs-outputs source="action.yml" -->

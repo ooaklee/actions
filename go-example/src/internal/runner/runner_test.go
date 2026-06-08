@@ -3,7 +3,6 @@ package runner_test
 import (
 	"bytes"
 	"context"
-	"os"
 	"testing"
 
 	"github.com/ooaklee/actions/go-example/go/internal/config"
@@ -12,6 +11,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+// TestRunner_InvokeAction verifies workspace validation and greeting output behaviour.
 func TestRunner_InvokeAction(t *testing.T) {
 
 	tests := []struct {
@@ -25,7 +25,6 @@ func TestRunner_InvokeAction(t *testing.T) {
 		{
 			name: "successfully invoke action",
 			preRun: func() {
-				os.Setenv("GITHUB_WORKSPACE", "test/dir")
 			},
 			envMap: map[string]string{
 				"INPUT_NAME":       "john",
@@ -43,7 +42,6 @@ Hello, john
 		{
 			name: "failed no workspace env detected",
 			preRun: func() {
-				os.Setenv("GITHUB_WORKSPACE", "")
 			},
 			envMap: map[string]string{
 				"INPUT_NAME":       "john",
@@ -60,6 +58,12 @@ Hello, john
 			ctx := context.Background()
 			actionLog := bytes.NewBuffer(nil)
 
+			if test.expectedError == runner.ErrGitHubWorkspaceEnvVarIsMissing {
+				t.Setenv("GITHUB_WORKSPACE", "")
+			} else {
+				t.Setenv("GITHUB_WORKSPACE", "test/dir")
+			}
+
 			test.preRun()
 
 			getenv := func(key string) string {
@@ -74,12 +78,11 @@ Hello, john
 			cfg, err := config.NewFromInputs(action)
 			if err != nil {
 				assert.Equal(t, test.expectedError, err)
+				return
 			}
 
 			err = runner.InvokeAction(ctx, cfg)
-			if err != nil {
-				assert.Equal(t, test.expectedError, err)
-			}
+			assert.Equal(t, test.expectedError, err)
 
 			assert.Equal(t, test.expectedOutput, actionLog.String())
 		})

@@ -9,6 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+// TestConfig_NewFromInputs verifies that action inputs are parsed, defaulted, and validated.
 func TestConfig_NewFromInputs(t *testing.T) {
 
 	tests := []struct {
@@ -34,6 +35,48 @@ func TestConfig_NewFromInputs(t *testing.T) {
 			expectedOutput: "",
 			expectedError:  nil,
 		},
+		{
+			name:   "successful - created config with default repetition",
+			preRun: func() {},
+			envMap: map[string]string{
+				"INPUT_NAME": "john",
+			},
+			expectedConfig: config.Config{
+				Name:       "john",
+				Repetition: config.DefaultRepetition,
+			},
+			expectedOutput: "::debug::The repetition input was not provided, using default value of 1\n",
+			expectedError:  nil,
+		},
+		{
+			name:   "failed - missing name input",
+			preRun: func() {},
+			envMap: map[string]string{
+				"INPUT_REPETITION": "4",
+			},
+			expectedOutput: "::error::The name input was not provided\n",
+			expectedError:  config.ErrNameInputIsMissing,
+		},
+		{
+			name:   "failed - invalid repetition input",
+			preRun: func() {},
+			envMap: map[string]string{
+				"INPUT_NAME":       "john",
+				"INPUT_REPETITION": "many",
+			},
+			expectedOutput: "::error::Cannot convert the 'repetition' input (many) to an int\n",
+			expectedError:  config.ErrInvalidRepetitionInput,
+		},
+		{
+			name:   "failed - repetition must be positive",
+			preRun: func() {},
+			envMap: map[string]string{
+				"INPUT_NAME":       "john",
+				"INPUT_REPETITION": "0",
+			},
+			expectedOutput: "::error::The 'repetition' input must be greater than 0\n",
+			expectedError:  config.ErrRepetitionMustBePositive,
+		},
 	}
 
 	for _, test := range tests {
@@ -54,6 +97,7 @@ func TestConfig_NewFromInputs(t *testing.T) {
 
 			cfg, inputsErr := config.NewFromInputs(action)
 			if inputsErr != nil {
+				assert.Equal(t, test.expectedOutput, actionLog.String())
 				assert.Equal(t, test.expectedError, inputsErr)
 			}
 
