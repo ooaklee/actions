@@ -1,14 +1,15 @@
 name: 'Go Example (GHA)'
 description: 'A template for a Go-based action'
-author: 'Leon Silcott'
+author: 'Leon Silcott <leon@boasi.io>'
 inputs:
   name:
-    description: 'The name to greet sample input'
-    required: required
+    description: 'The name to greet'
+    required: true
   repetition:
-    description: 'The number of times to repeat greeting sample input'
-    required: required
+    description: 'The number of times to repeat the greeting'
+    required: false
+    default: '1'
 
 runs:
-  using: 'node20'
+  using: 'node24'
   main: 'invoke-binary.js'

@@ -14,8 +14,15 @@ var (
 	ErrGitHubWorkspaceEnvVarIsMissing = errors.New("GitHubWorkspaceEnvVarIsMissing")
 )
 
+// InvokeAction runs the action behaviour using the parsed config and cancellation context.
 func InvokeAction(ctx context.Context, cfg *config.Config) error {
-	var githubActionWorkingDir string = os.Getenv("GITHUB_WORKSPACE")
+	select {
+	case <-ctx.Done():
+		return ctx.Err()
+	default:
+	}
+
+	githubActionWorkingDir := os.Getenv("GITHUB_WORKSPACE")
 
 	if githubActionWorkingDir == "" {
 		cfg.Action.Errorf("GITHUB_WORKSPACE not found")
@@ -23,6 +30,12 @@ func InvokeAction(ctx context.Context, cfg *config.Config) error {
 	}
 
 	for i := 0; i < cfg.Repetition; i++ {
+		select {
+		case <-ctx.Done():
+			return ctx.Err()
+		default:
+		}
+
 		cfg.Action.Infof("Hello, %s", cfg.Name)
 	}
 
