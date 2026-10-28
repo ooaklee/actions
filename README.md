@@ -36,7 +36,7 @@ $ asdf plugin-add yarn
 $ asdf install
 ```
 
-This installs Node.js 24.16.0, Yarn 1.22.22, and Go 1.26.4 as pinned in `.tool-versions`.
+This installs Node.js 24.22.1, Yarn 1.22.22, and Go 1.26.10 as pinned in `.tool-versions`.
 
 Complete the setup of the repo.
 
@@ -45,14 +45,7 @@ $ corepack enable
 $ asdf reshim nodejs
 $ asdf reshim yarn
 $ asdf reshim golang
-$ yarn
-yarn install v1.22.22
-[1/4] 🔍  Resolving packages...
-[2/4] 🚚  Fetching packages...
-[3/4] 🔗  Linking dependencies...
-[4/4] 🔨  Building fresh packages...
-\$ husky
-✨ Done in 0.16s.
+$ yarn install --frozen-lockfile
 ```
 
 Common commands:
@@ -60,6 +53,7 @@ Common commands:
 ```sh
 $ yarn test
 $ yarn package
+$ yarn readme --check
 $ yarn readme --update
 $ yarn audit
 ```

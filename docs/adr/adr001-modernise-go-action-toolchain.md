@@ -47,3 +47,9 @@ The template is clearer for future authors because input parsing, runner behavio
 The repository remains on Yarn classic. This avoids a package-manager migration in the same change, but it means future maintainers should continue to account for Yarn classic behaviour and warnings when running on newer Node.js versions.
 
 Checked-in binaries will continue to change whenever Go source, Go compiler versions, or build flags change. Maintainers must keep source and `dist/` artefacts synchronised before publishing.
+
+## Follow-up: dependency and documentation maintenance
+
+The later hardening update retains Yarn classic and the Node 24 action runtime while updating Node 24.16.0 to 24.22.1 and Go 1.26.4 to 1.26.10, including the Go module minimum. It replaces the `action-docs` dependency chain with a local deterministic generator using `yaml` 2.9.1 for the input and output tables. This removes an unnecessary third-party documentation tool and its transitive dependencies; maintainers must run `yarn readme --check` to detect stale tables and `yarn readme --update` after changing action metadata. Continue reviewing upstream advisories and package provenance, and regenerate the binaries after Go or source changes.
+
+The normal test command checks generated README consistency and exercises metadata escaping and empty defaults with fixtures. The pre-commit hook uses POSIX shell syntax so it can stage the intended files in common shell environments.
